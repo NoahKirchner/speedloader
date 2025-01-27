@@ -1,0 +1,47 @@
+#![feature(rustc_private)]
+
+extern crate rustc_driver;
+//extern crate rustc_interface;
+
+//use rustc_driver;
+//use rustc_interface::interface::Compiler;
+use std::env;
+use std::process::Command;
+
+fn main() {
+    
+    // Grab args so we can give this an input and an output. This should be changed to clap
+    // obviously.
+    let args: Vec<String> = env::args().collect();
+
+    // We aren't doing any analysis based on callbacks so this code is irrelevant to us, but has to
+    // exist to satisfy a trait expectation in RunCompiler.
+    struct MyCallbacks;
+    impl rustc_driver::Callbacks for MyCallbacks{};
+    
+    
+
+    // Compiles the bof rust file into an object file and links it using the provided linker file.
+    let result = rustc_driver::RunCompiler::new(&["".to_string(), "-C".to_string(), "panic=abort".to_string(), "-C".to_string(), "link-arg=-Wl,-Tspeed.ld,--build-id=none".to_string(),  "-C".to_string(), "link-arg=-nostdlib".to_string(), "-C".to_string(), "link-arg=-static".to_string(), "-C".to_string(), "link-arg=-nodefaultlibs".to_string(), "-C".to_string(), "opt-level=z".to_string(), "--emit=obj".to_string(), args[1].clone(), "-o".to_string(), args[2].clone()], &mut MyCallbacks).run();
+
+    let strip = Command::new("strip")
+        .arg(args[2].clone())
+        .spawn()
+        .expect("Failed to strip the binary. Do you have strip installed?");
+
+    let objcopy = Command::new("objcopy")
+        .arg("-O")
+        .arg("binary")
+        .arg("-j")
+        .arg(".text.prologue")
+        .arg("-j")
+        .arg(".text")
+        .arg("-j")
+        .arg(".data")
+        .arg(args[2].clone())
+        .arg(format!("{}.{}", args[2].clone(), "bin"))
+        .spawn()
+        .expect("Failed to run objcopy. Do you have objcopy installed?");
+
+
+}

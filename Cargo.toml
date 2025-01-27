@@ -1,0 +1,7 @@
+[workspace]
+members = ["example/runner", "speedldr"]
+
+[package]
+name = "speedloader"
+version = "0.8.0"
+edition = "2021"

@@ -48,7 +48,14 @@ The payload does not import the struct as a module, and rather includes it direc
 With these two previous sections put together, we now see how the runner's functions are executed by the BOF. When the runner calls the payload, it passes along its function addresses and allows the payload to call them. While the examples used here are extremely simplistic, the process of exposing the runner functions to the payload is fairly painless, and likewise the process of calling the functions from the payload's perspective is not much more difficult than calling any other function.
 
 ## References
+Some great information on writing shellcode in Rust
 https://os.phil-opp.com/freestanding-rust-binary/
+
 https://jade.fyi/blog/writeonly-in-rust/
+
+Driving the Rust compiler is extremely poorly documented, but this had enough information to struggle through it.
 https://rustc-dev-guide.rust-lang.org/
+
+Gotta pay it back to the OG of course.
 https://github.com/trustedsec/COFFLoader
+

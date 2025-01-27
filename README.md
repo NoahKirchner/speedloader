@@ -49,13 +49,16 @@ With these two previous sections put together, we now see how the runner's funct
 
 ## References
 Some great information on writing shellcode in Rust
+
 https://os.phil-opp.com/freestanding-rust-binary/
 
 https://jade.fyi/blog/writeonly-in-rust/
 
 Driving the Rust compiler is extremely poorly documented, but this had enough information to struggle through it.
+
 https://rustc-dev-guide.rust-lang.org/
 
 Gotta pay it back to the OG of course.
+
 https://github.com/trustedsec/COFFLoader
 
